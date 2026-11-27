@@ -43,8 +43,8 @@ documentation in this repository are released under the MIT License; see
 
 ## Installation footprint
 
-Installing this mod **replaces six original game files and adds seven new
+Installing this mod **replaces eight original game files and adds seven new
 files** inside your game installation. Both operations are fully reversible:
-restore the six originals (from your own backups or with Steam's *Verify
+restore the eight originals (from your own backups or with Steam's *Verify
 integrity of game files*) and delete the seven added files. The full list is
 documented in the installation guide shipped with every release.
