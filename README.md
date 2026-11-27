@@ -19,7 +19,8 @@ overhaul.
 
 | Version | Status | Notes |
 |---|---|---|
-| `1.8.3-preview-mode-localization` | **Current** | English / Chinese / German / Russian option names and native tooltips; verified against the registered Windows baseline. |
+| `1.9.0` | **Current** | Landings, airborne drops, the air-attack family, naval bombardment and the tactical cards now show the actual outcome, and a preview that falls back to the estimate says so. |
+| `1.8.3-preview-mode-localization` | Previous | English / Chinese / German / Russian option names and native tooltips; verified against the registered Windows baseline. |
 
 Download the package from the [Releases page](https://github.com/misprit/uoc2-actual-outcome/releases).
 Each release contains a ZIP and a `SHA256SUMS.txt` file — please verify the
@@ -61,19 +62,31 @@ numbers**. Neither is a "reroll" button.
 2. HQ Pindown.
 3. HQ Suppressive Fire.
 4. HQ Set-Piece Attack.
+5. Assault crossings.
+6. Amphibious landings, previewed on the cell you aim at.
+7. Airborne drops, previewed on the cell you choose.
+8. Air attacks: plain air attack, saturation strike, flying artillery and
+   precision bombing.
+9. Naval bombardment, previewed with the setting the bombardment itself uses.
+10. Tactical cards: tactical para drop and tactical naval assault, including the
+    divisional variants.
 
 Previews include information on retreats, trapped units, overrun, city
 destruction, fortifications and entrenchments.
 
+**When a preview falls back.** If an exact preview cannot be prepared, this
+release says so instead of quietly showing a probability estimate: map labels
+switch to a distinct colour and the combat sheet names the estimate. A coloured
+label or a named estimate means "this one is not the exact result". The action
+itself still works.
+
 **Not included**
 
-- Exact previews for amphibious landings or airborne drops.
 - Exact previews for hypothetical movement destinations. Movement-hover
   previews deliberately keep the vanilla estimate, so you can compare
   positions; after moving, supported engagements at the unit's real position
   use your selected mode.
-- Other action paths are not guaranteed. A failed exact preview may fall back
-  to the vanilla estimate.
+- Other action paths are not guaranteed.
 
 **L-key integration.** The game's existing "Hide Map Labels" action (default
 `L`) is retained. During eligible player action phases, each valid press also
@@ -95,13 +108,15 @@ and it is inactive during AI turns, history playback and deployment.
    *Manage → Browse local files*. The folder that opens contains `uoc2.exe`,
    `lib` and `_packages` at the same level. Do not open `lib` or `_packages`
    yet.
-3. **Back up the six original files** the mod replaces (paths relative to the
+3. **Back up the eight original files** the mod replaces (paths relative to the
    game root):
 
    ```
    lib/uoc2/state/game/combat.pyc
    lib/uoc2/state/game/actions/combat.pyc
    lib/uoc2/game_world/widget.pyc
+   lib/uoc2/state/proxy/game_proxy.pyc
+   lib/uoc2/common/scalables.pyc
    lib/uoc2/main_screen/opt_ctrl.pyc
    _packages/base/config/ui/yml/options_general.yml
    _packages/base/config/tooltips.yml
@@ -120,8 +135,8 @@ and it is inactive during AI turns, history playback and deployment.
 7. Open a scenario you know, then compare a preview with the executed result
    for a supported engagement from a unit's actual position.
 
-The package contains a file manifest (`产品清单.json`) listing all 13 files:
-six replacements and seven new files.
+The package contains a file manifest (`产品清单.json`) listing all 15 files:
+eight replacements and seven new files.
 
 ### Upgrading
 
@@ -132,7 +147,7 @@ that a mod added, so remove them yourself using the old manifest.
 ### Uninstalling
 
 1. Exit the game.
-2. Restore the six overwritten files from your backups, or use Steam's
+2. Restore the eight overwritten files from your backups, or use Steam's
    *Verify integrity of game files*. If the game was updated since you made the
    backups, prefer verification so that you get the current original files.
 3. After confirming that no other mod uses them, delete **only** these seven
@@ -250,12 +265,18 @@ disclaimer.
 
 ## 当前范围
 
-**已支持**：实际当前位置的普通地面战斗、HQ pindown、HQ 压制射击、HQ 定位攻击；
-包含撤退、被困、奇袭及城市／工事／堑壕相关预览显示整理。
+**已支持**：实际当前位置的普通地面战斗、HQ pindown、HQ 压制射击、HQ 定位攻击、
+强渡、登陆（按你瞄定的那一格）、普通空降（按你选的落格）、空袭族（普通空袭／
+饱和打击／空中炮击／精确轰炸）、舰炮轰炸（预览口径与实际结算一致），以及战术卡牌
+（战术空降／战术舰炮，含师级卡）；包含撤退、被困、奇袭及城市／工事／堑壕相关
+预览显示整理。
 
-**不包含**：登陆与空降的精确预览；移动落点的精确预览（移动悬停保留原版期望值，
-方便比较位置；实际移动后再按所选模式查看当前位置交战）；其他未列出的路径不作保证。
-预览失败时可能回退原版估计。**本 Mod 不是新战斗规则。**
+**预览失败会明说**：某个交战的精确预览备不出来时，本版不会悄悄显示概率估计——
+地图标签改用另一种颜色显示，战斗面板会注明这是原版估计。看到异色标签或面板上的
+“原版估计”字样，就是这一格不是确定结果；行动本身仍可正常执行。
+
+**不包含**：移动落点的精确预览（移动悬停保留原版期望值，方便比较位置；实际移动后
+再按所选模式查看当前位置交战）；其他未列出的路径不作保证。**本 Mod 不是新战斗规则。**
 
 **L 键联动**：原有隐藏地图标签功能（默认 `L`）保留，并在允许的玩家行动阶段联动
 消耗一个随机值、清除旧预览供重新查看。它不重置种子，不保证每次数字改变，
@@ -266,11 +287,11 @@ disclaimer.
 订阅工坊**不等于安装**，取消订阅**不等于卸载**。详细步骤见上方英文说明与包内
 `README-Installmethod.txt`／`必看-中文安装说明.txt`：
 
-1. 退出游戏，备份说明中列出的六个原文件。
+1. 退出游戏，备份说明中列出的八个原文件。
 2. 解压后**只**将 `lib` 和 `_packages` 合并复制到游戏根目录（`uoc2.exe` 所在层）。
 3. 启动游戏，在语言选项右侧选择预览模式。
 
-卸载须恢复六个覆盖文件，并按说明删除七个新增文件；**不要删除整个目录**。
+卸载须恢复八个覆盖文件，并按说明删除七个新增文件；**不要删除整个目录**。
 
 ## 兼容性
 
